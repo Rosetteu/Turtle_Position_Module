@@ -134,12 +134,12 @@ function Position.GoTo(x,y,z,Face)
     assert(x,"x is nil, had to be a number or a table.")
     local Goal
     if type(x) == "table" then
-        Goal = {x=x.x or 0,y=x.y or 0,z=x.z or 0,Face=x.Face or "north"}
+        Goal = {x=tonumber(x.x) or 0,y=tonumber(x.y) or 0,z=tonumber(x.z) or 0,Face=x.Face or "north"}
     else
         Goal = {
-            x = x or 0,
-            y = y or 0,
-            z = z or 0,
+            x = tonumber(x) or 0,
+            y = tonumber(y) or 0,
+            z = tonumber(z) or 0,
             Face = Face or "north"
         }
     end
