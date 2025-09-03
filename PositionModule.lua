@@ -105,9 +105,30 @@ function Position.TurnToFace(Face)
     if Face == Position.Get().Face then return true end
     repeat
         Position.Left()
-    until Position.Get().Face ~= Face
+    until Position.Get().Face == Face
     return true
 end
+
+--[[
+function ComparePosition(A,B)
+    assert(A,"A is nil")
+    assert(B,"B is nil")
+    if type(A) ~= "table" then
+        error("A is'n a table.")
+    end
+    if type(B) ~= "table" then
+        error("B is'n a table.")
+    end
+    for key, Value in pairs(A) do
+        print(key)
+        if not B[key] then print("falseeee") return false end
+        if B[key] ~= Value then 
+            print(B[key],Value)
+            return false
+        end
+    end
+    return true
+end]]
 
 function Position.GoTo(x,y,z,Face)
     assert(x,"x is nil, had to be a number or a table.")
@@ -122,36 +143,97 @@ function Position.GoTo(x,y,z,Face)
             Face = Face or "north"
         }
     end
+    if Position.Get() == Goal then
+        return true
+    end
     local TurtlePosition = Position.Get()
-    if TurtlePosition.x > Goal.x then
+    while Position.Get().x > Goal.x do
         Position.TurnToFace("west")
-        repeat
-            local Success, Err = Position.Forward()
+        local HasBlock, Datas = turtle.inspect()
+        if HasBlock then
+            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+                error("Blacklisted block in fornt of the turtle.")
+            end
+            local Success, Err = turtle.dig()
             if not Success then
-                if Err == "Block" then
-                    local Success, Err = turtle.dig()
-                    if not Success then
-                        print(Err)
-                    end
+                print(Err)
+            end
+        end
+        local Success, Err = Position.Forward()
+        if not Success then
+            if Err == "Block" then
+                local Success, Err = turtle.dig()
+                if not Success then
+                    print(Err)
                 end
             end
-        until Position.Get().x == Goal.x
-    elseif TurtlePosition.x < Goal.x then
-        Position.TurnToFace("east")
-        repeat
-            Position.Forward()
-        until Position.Get().x == Goal.x
+        end
     end
-    if TurtlePosition.z > Goal.z then
+    while Position.Get().x < Goal.x do
+        Position.TurnToFace("east")
+        local HasBlock, Datas = turtle.inspect()
+        if HasBlock then
+            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+                error("Blacklisted block in fornt of the turtle.")
+            end
+            local Success, Err = turtle.dig()
+            if not Success then
+                print(Err)
+            end
+        end
+        local Success, Err = Position.Forward()
+        if not Success then
+            if Err == "Block" then
+                local Success, Err = turtle.dig()
+                if not Success then
+                    print(Err)
+                end
+            end
+        end
+    end
+    while Position.Get().z > Goal.z do
         Position.TurnToFace("north")
-        repeat
-            Position.Forward()
-        until Position.Get().z == Goal.z
-    elseif TurtlePosition.z < Goal.z then
+        local HasBlock, Datas = turtle.inspect()
+        if HasBlock then
+            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+                error("Blacklisted block in fornt of the turtle.")
+            end
+            local Success, Err = turtle.dig()
+            if not Success then
+                print(Err)
+            end
+        end
+        local Success, Err = Position.Forward()
+        if not Success then
+            if Err == "Block" then
+                local Success, Err = turtle.dig()
+                if not Success then
+                    print(Err)
+                end
+            end
+        end
+    end
+    while Position.Get().z < Goal.z do
         Position.TurnToFace("south")
-        repeat
-            Position.Forward()
-        until Position.Get().z == Goal.z
+        local HasBlock, Datas = turtle.inspect()
+        if HasBlock then
+            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+                error("Blacklisted block in fornt of the turtle.")
+            end
+            local Success, Err = turtle.dig()
+            if not Success then
+                print(Err)
+            end
+        end
+        local Success, Err = Position.Forward()
+        if not Success then
+            if Err == "Block" then
+                local Success, Err = turtle.dig()
+                if not Success then
+                    print(Err)
+                end
+            end
+        end
     end
     if Face then
         Position.TurnToFace(Face)

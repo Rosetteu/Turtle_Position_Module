@@ -1,4 +1,3 @@
-_G.TurtleSettings = require("TurtleSettings")
 _G.ReadFile = function (FileName)
     if not FileName then error("FileName is nil") end
     local File = fs.open(FileName,"r")
@@ -15,7 +14,10 @@ _G.WriteFile = function (FileName, Data)
     File.close()
     return true
 end
+_G.TurtleSettings = require("TurtleSettings")
+_G.Utils = require("Utils")
 _G.Position = require("PositionModule")
 TurtlePosition = ReadFile("Position")
+require("Reset")
 print("Position : "..TurtlePosition.x..","..TurtlePosition.y..", "..TurtlePosition.z..", "..TurtlePosition.Face)
 print("Carburant : "..turtle.getFuelLevel().." ("..(turtle.getFuelLevel()/turtle.getFuelLimit())*100 .."%)")
