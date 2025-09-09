@@ -9,6 +9,11 @@ local TurtleSettings = {
         x = 1
        ,y = -56
        ,z = 0
+    },
+    Home = {
+        x = 0
+        ,y = -56
+        ,z = 0
     }
 }
 return TurtleSettings

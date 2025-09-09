@@ -1,6 +1,21 @@
 local Position = {}
 local PositionFile = "Position"
 
+assert(WriteFile, "WriteFile() is nil.")
+assert(ReadFile, "ReadFile() is nil.")
+
+local find = function(Table, Value)
+    if not Table then error("Table is nil or false") end
+    if not Value then error("Value is nil or false") end
+    for i, v in ipairs(Table) do
+        if v == Value then
+            return i
+        end
+    end
+    return nil
+end
+
+
 function Position.Set(x, y, z, Face)
     local CurrentPosition = ReadFile(PositionFile)
     if type(x) == "table" then
@@ -21,7 +36,6 @@ function Position.Set(x, y, z, Face)
     WriteFile(PositionFile, TurtlePosition)
 end
 
-
 function Position.Get()
     local TurtlePosition = ReadFile(PositionFile)
     if not TurtlePosition then error("Position.Get à été utilisé alors que la position n'a pas été définie.") end
@@ -33,7 +47,7 @@ function Position.Forward()
     if not TurtlePosition then error("TurtlePosition is nil.") end
     local HasBlock, Datas = turtle.inspect()
     if HasBlock then
-        return false,"Block",Datas
+        return false, "Block", Datas
     else
         if turtle.getFuelLevel() > 0 then
             local Success = turtle.forward()
@@ -41,7 +55,7 @@ function Position.Forward()
                 if TurtlePosition.Face == "north" then
                     TurtlePosition.z = TurtlePosition.z - 1
                 elseif TurtlePosition.Face == "south" then
-                    TurtlePosition.z = TurtlePosition.z+ 1
+                    TurtlePosition.z = TurtlePosition.z + 1
                 elseif TurtlePosition.Face == "east" then
                     TurtlePosition.x = TurtlePosition.x + 1
                 elseif TurtlePosition.Face == "west" then
@@ -100,7 +114,7 @@ function Position.Left()
     end
 end
 
-function Position.TurnToFace(Face) 
+function Position.TurnToFace(Face)
     if Face ~= "north" and Face ~= "south" and Face ~= "east" and Face ~= "west" then error("Face isn't a face.") end
     if Face == Position.Get().Face then return true end
     repeat
@@ -109,36 +123,38 @@ function Position.TurnToFace(Face)
     return true
 end
 
-
-function ComparePosition(A,B,isATest)
+function ComparePosition(A, B, isATest)
     if not isATest then error("This function is'nt usable.") end
-    assert(A,"A is nil")
-    assert(B,"B is nil")
+    assert(A, "A is nil")
+    assert(B, "B is nil")
     if type(A) ~= "table" then
-        error("A is'n a table.")
+        error("A isn't a table.")
     end
     if type(B) ~= "table" then
-        error("B is'n a table.")
+        error("B isn't a table.")
     end
-    A = {x=A.x or 0,y=A.y or 0,z=A.z or 0,Face=A.Face or "north"}
-    B = {x=B.x or 0,y=B.y or 0,z=B.z or 0,Face=B.Face or "north"}
-    
+    A = { x = A.x or 0, y = A.y or 0, z = A.z or 0, Face = A.Face or "north" }
+    B = { x = B.x or 0, y = B.y or 0, z = B.z or 0, Face = B.Face or "north" }
+
     for key, Value in pairs(A) do
         print(key)
-        if not B[key] then print("falseeee") return false end
-        if B[key] ~= Value then 
-            print(B[key],Value)
+        if not B[key] then
+            print("falseeee")
+            return false
+        end
+        if B[key] ~= Value then
+            print(B[key], Value)
             return false
         end
     end
     return true
 end
 
-function Position.GoTo(x,y,z,Face)
-    assert(x,"x is nil, had to be a number or a table.")
+function Position.GoTo(x, y, z, Face)
+    assert(x, "x is nil, had to be a number or a table.")
     local Goal
     if type(x) == "table" then
-        Goal = {x=tonumber(x.x) or 0,y=tonumber(x.y) or 0,z=tonumber(x.z) or 0,Face=x.Face or "north"}
+        Goal = { x = tonumber(x.x) or 0, y = tonumber(x.y) or 0, z = tonumber(x.z) or 0, Face = x.Face or "north" }
     else
         Goal = {
             x = tonumber(x) or 0,
@@ -155,7 +171,7 @@ function Position.GoTo(x,y,z,Face)
         Position.TurnToFace("west")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
@@ -177,7 +193,7 @@ function Position.GoTo(x,y,z,Face)
         Position.TurnToFace("east")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
@@ -199,7 +215,7 @@ function Position.GoTo(x,y,z,Face)
         Position.TurnToFace("north")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
@@ -221,7 +237,7 @@ function Position.GoTo(x,y,z,Face)
         Position.TurnToFace("south")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if Utils.Table.Find(TurtleSettings.BlackListedBlocks,Datas.name) then
+            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
