@@ -8,7 +8,7 @@ if #Args == 1 then
     if not type(Str) == "string" then return end
     for _, Location in ipairs(Locations) do
         if find(Location.Names,Str) then
-            position.GoTo(Location.Position)
+            position.goTo(Location.Position)
         end
     end
 else
@@ -16,5 +16,5 @@ else
         print("3+ arguments needs, gave "..#Args)
         return
     end
-    position.GoTo(Args[1], Args[2], Args[3], Args[4])
+    position.goTo(Args[1], Args[2], Args[3], Args[4])
 end

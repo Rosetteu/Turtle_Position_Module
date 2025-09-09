@@ -28,5 +28,5 @@ end
 _G.turtleSettings = require("TurtleSettings")
 _G.position = require("PositionModule")
 local turtlePosition = readFile("Position")
-print("Position : "..TurtlePosition.x..","..TurtlePosition.y..", "..TurtlePosition.z..", "..TurtlePosition.Face)
+print("Position : "..turtlePosition.x..","..turtlePosition.y..", "..turtlePosition.z..", "..turtlePosition.Face)
 print("Carburant : "..turtle.getFuelLevel().." ("..(turtle.getFuelLevel()/turtle.getFuelLimit())*100 .."%)")

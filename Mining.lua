@@ -1,4 +1,4 @@
-local StartLocation = position.Get()
+local StartLocation = position.get()
 
 while true do
     local HasBlock, Datas = turtle.inspectUp()
@@ -13,22 +13,22 @@ while true do
             turtle.digDown()
         end
     end
-    position.Right()
+    position.right()
     HasBlock, Datas = turtle.inspect()
     if HasBlock then
         if find(turtleSettings.WhitelistedBlocks, Datas.name) then
             turtle.dig()
         end
     end
-    position.Left()
-    position.Left()
+    position.left()
+    position.left()
     HasBlock, Datas = turtle.inspect()
     if HasBlock then
         if find(turtleSettings.WhitelistedBlocks, Datas.name) then
             turtle.dig()
         end
     end
-    position.Right()
+    position.right()
     HasBlock, Datas = turtle.inspect()
     if HasBlock then
         if not find(turtleSettings.BlackListedBlocks, Datas.name) then
@@ -36,7 +36,7 @@ while true do
         end
     end
     if turtle.getFuelLevel() >= tonumber(turtle.getFuelLimit()) * 0.10 then
-            local Success, Err = position.Forward()
+            local Success, Err = position.forward()
             if not Success then
                 print("hii ",Err)
             end
