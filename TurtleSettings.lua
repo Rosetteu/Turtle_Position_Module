@@ -1,9 +1,13 @@
 local TurtleSettings = {
-    BlackListedBlocks = {
+    BlacklistedBlocks = {
         "minecraft:bedrock"
     },
     WhitelistedBlocks = {
         "minecraft:deepslate_diamond_ore"
+    },
+    AutoEjectItems = {
+        "minecraft:cobbeled_deepslate",
+        "minecraft:tuff"
     },
     ChestLocation = {
         x = 1
