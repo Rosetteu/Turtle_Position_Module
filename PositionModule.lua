@@ -1,23 +1,12 @@
 local Position = {}
 local PositionFile = "Position"
 
-assert(WriteFile, "WriteFile() is nil.")
-assert(ReadFile, "ReadFile() is nil.")
-
-local find = function(Table, Value)
-    if not Table then error("Table is nil or false") end
-    if not Value then error("Value is nil or false") end
-    for i, v in ipairs(Table) do
-        if v == Value then
-            return i
-        end
-    end
-    return nil
-end
+assert(writeFile, "writeFile() is nil.")
+assert(readFile, "readFile() is nil.")
 
 
 function Position.Set(x, y, z, Face)
-    local CurrentPosition = ReadFile(PositionFile)
+    local CurrentPosition = readFile(PositionFile)
     if type(x) == "table" then
         TurtlePosition = {
             x = x.x or 0,
@@ -33,11 +22,11 @@ function Position.Set(x, y, z, Face)
             Face = Face or CurrentPosition.Face or "north"
         }
     end
-    WriteFile(PositionFile, TurtlePosition)
+    writeFile(PositionFile, TurtlePosition)
 end
 
 function Position.Get()
-    local TurtlePosition = ReadFile(PositionFile)
+    local TurtlePosition = readFile(PositionFile)
     if not TurtlePosition then error("Position.Get à été utilisé alors que la position n'a pas été définie.") end
     return TurtlePosition
 end
@@ -171,7 +160,7 @@ function Position.GoTo(x, y, z, Face)
         Position.TurnToFace("west")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
+            if find(turtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
@@ -193,7 +182,7 @@ function Position.GoTo(x, y, z, Face)
         Position.TurnToFace("east")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
+            if find(turtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
@@ -215,7 +204,7 @@ function Position.GoTo(x, y, z, Face)
         Position.TurnToFace("north")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
+            if find(turtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
@@ -237,7 +226,7 @@ function Position.GoTo(x, y, z, Face)
         Position.TurnToFace("south")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
-            if find(TurtleSettings.BlackListedBlocks, Datas.name) then
+            if find(turtleSettings.BlackListedBlocks, Datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local Success, Err = turtle.dig()
