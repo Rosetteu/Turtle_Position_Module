@@ -119,6 +119,8 @@ function ComparePosition(A,B)
     if type(B) ~= "table" then
         error("B is'n a table.")
     end
+    A = {x=A.x or 0,y=A.y or 0,z=A.z or 0,Face=A.Face or "north"}
+    B = {x=B.x or 0,y=B.y or 0,z=B.z or 0,Face=B.Face or "north"}
     for key, Value in pairs(A) do
         print(key)
         if not B[key] then print("falseeee") return false end
