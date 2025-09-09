@@ -109,8 +109,9 @@ function Position.TurnToFace(Face)
     return true
 end
 
---[[
-function ComparePosition(A,B)
+
+function ComparePosition(A,B,isATest)
+    if not isATest then error("This function is'nt usable.") end
     assert(A,"A is nil")
     assert(B,"B is nil")
     if type(A) ~= "table" then
@@ -119,6 +120,9 @@ function ComparePosition(A,B)
     if type(B) ~= "table" then
         error("B is'n a table.")
     end
+    A = {x=A.x or 0,y=A.y or 0,z=A.z or 0,Face=A.Face or "north"}
+    B = {x=B.x or 0,y=B.y or 0,z=B.z or 0,Face=B.Face or "north"}
+    
     for key, Value in pairs(A) do
         print(key)
         if not B[key] then print("falseeee") return false end
@@ -128,7 +132,7 @@ function ComparePosition(A,B)
         end
     end
     return true
-end]]
+end
 
 function Position.GoTo(x,y,z,Face)
     assert(x,"x is nil, had to be a number or a table.")
