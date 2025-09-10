@@ -112,6 +112,19 @@ function position.turnToFace(Face)
     return true
 end
 
+function position.getDistanceBetween(pointA,pointB)
+    assert(pointA,"pointA is nil.")
+    assert(pointB,"pointB is nil.")
+    if type(pointA) ~= "table" then
+        error("pointA isn't a table")
+    end if type(pointB) ~= "table" then
+        error("pointB isn't a table")
+    end
+    pointA = { x = tonumber(pointA.x) or 0, y = pointA.y or 0, z = pointA.z or 0}
+    pointB = { x = pointB.x or 0, y = pointB.y or 0, z = pointB.z or 0}
+return math.sqrt((pointB.x-pointA.x)^2+(pointB.y-pointA.y)^2+(pointB.z-pointA.z)^2)
+end
+
 function position.comparePosition(A, B, isATest)
     if not isATest then error("This function is'nt usable.") end
     assert(A, "A is nil")
@@ -139,24 +152,24 @@ function position.comparePosition(A, B, isATest)
     return true
 end
 
-function position.goTo(x, y, z, Face)
+function position.goTo(x, y, z, face)
     assert(x, "x is nil, had to be a number or a table.")
-    local Goal
+    local goal
     if type(x) == "table" then
-        Goal = { x = tonumber(x.x) or 0, y = tonumber(x.y) or 0, z = tonumber(x.z) or 0, Face = x.Face or "north" }
+        goal = { x = tonumber(x.x) or 0, y = tonumber(x.y) or 0, z = tonumber(x.z) or 0, Face = x.Face or "north" }
     else
-        Goal = {
+        goal = {
             x = tonumber(x) or 0,
             y = tonumber(y) or 0,
             z = tonumber(z) or 0,
-            Face = Face or "north"
+            face = face or "north"
         }
     end
-    if position.get() == Goal then
+    if position.get() == goal then
         return true
     end
     local TurtlePosition = position.get()
-    while position.get().x > Goal.x do
+    while position.get().x > goal.x do
         position.turnToFace("west")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
@@ -178,7 +191,7 @@ function position.goTo(x, y, z, Face)
             end
         end
     end
-    while position.get().x < Goal.x do
+    while position.get().x < goal.x do
         position.turnToFace("east")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
@@ -190,62 +203,62 @@ function position.goTo(x, y, z, Face)
                 print(Err)
             end
         end
-        local Success, Err = position.forward()
-        if not Success then
-            if Err == "Block" then
-                local Success, Err = turtle.dig()
-                if not Success then
-                    print(Err)
+        local success, err = position.forward()
+        if not success then
+            if err == "block" then
+                local success, err = turtle.dig()
+                if not success then
+                    print(err)
                 end
             end
         end
     end
-    while position.get().z > Goal.z do
+    while position.get().z > goal.z do
         position.turnToFace("north")
-        local HasBlock, Datas = turtle.inspect()
-        if HasBlock then
-            if find(turtleSettings.BlackListedBlocks, Datas.name) then
+        local hasBlock, datas = turtle.inspect()
+        if hasBlock then
+            if find(turtleSettings.blackListedBlocks, datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
-            local Success, Err = turtle.dig()
-            if not Success then
-                print(Err)
+            local success, err = turtle.dig()
+            if not success then
+                print(err)
             end
         end
-        local Success, Err = position.forward()
-        if not Success then
-            if Err == "Block" then
-                local Success, Err = turtle.dig()
-                if not Success then
-                    print(Err)
+        local success, err = position.forward()
+        if not success then
+            if err == "block" then
+                local success, err = turtle.dig()
+                if not success then
+                    print(err)
                 end
             end
         end
     end
-    while position.get().z < Goal.z do
+    while position.get().z < goal.z do
         position.turnToFace("south")
-        local HasBlock, Datas = turtle.inspect()
-        if HasBlock then
-            if find(turtleSettings.BlackListedBlocks, Datas.name) then
+        local hasBlock, datas = turtle.inspect()
+        if hasBlock then
+            if find(turtleSettings.blackListedBlocks, datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
-            local Success, Err = turtle.dig()
-            if not Success then
-                print(Err)
+            local success, err = turtle.dig()
+            if not success then
+                print(err)
             end
         end
-        local Success, Err = position.forward()
-        if not Success then
-            if Err == "Block" then
-                local Success, Err = turtle.dig()
-                if not Success then
-                    print(Err)
+        local success, err = position.forward()
+        if not success then
+            if err == "block" then
+                local success, err = turtle.dig()
+                if not success then
+                    print(err)
                 end
             end
         end
     end
-    if Face then
-        position.turnToFace(Face)
+    if face then
+        position.turnToFace(face)
     end
 end
 
