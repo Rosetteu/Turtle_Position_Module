@@ -16,6 +16,7 @@ while true do
     if turtle.getFuelLevel() > position.getDistanceBetween(position.get(),turtleSettings.Home)  then
         local Success, Err = position.Forward()
         if not Success then
+            writeFile("logs"..tostring(os.time()),"Error at "..textUtils.serialise(position.get))))
         end
     else
         position.goTo(turtleSettings.Home)
