@@ -13,11 +13,9 @@ while true do
             turtle.dig()
         end
     end
-    if turtle.getFuelLevel() >= tonumber(turtle.getFuelLimit()) * 0.10 then
-            local Success, Err = position.Forward()
-            if not Success then
-            end
-        else
-            print('Je rentre !')
+    if turtle.getFuelLevel() > position.getDistanceBetween(position.get(),turtleSettings.Home)  then
+        local success, err = position.Forward()
+        if not success then
         end
+    end
 end
