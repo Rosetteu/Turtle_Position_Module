@@ -14,10 +14,10 @@ while true do
         end
     end
     if turtle.getFuelLevel() > position.getDistanceBetween(position.get(),turtleSettings.Home)  then
-            local Success, Err = position.Forward()
-            if not Success then
-            end
-        else
-            print('Je rentre !')
+        local Success, Err = position.Forward()
+        if not Success then
         end
+    else
+        position.goTo(turtleSettings.Home)
+    end
 end
