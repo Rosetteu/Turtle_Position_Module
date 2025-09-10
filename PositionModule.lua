@@ -122,7 +122,7 @@ function position.getDistanceBetween(pointA,pointB)
     end
     pointA = { x = tonumber(pointA.x) or 0, y = pointA.y or 0, z = pointA.z or 0}
     pointB = { x = pointB.x or 0, y = pointB.y or 0, z = pointB.z or 0}
-return math.sqrt((pointB.x-pointA.x)^2+(poinatB.y-pointA.y)^2+(pointB.z-pointA.z)^2)
+return math.sqrt((pointB.x-pointA.x)^2+(pointB.y-pointA.y)^2+(pointB.z-pointA.z)^2)
 end
 
 function position.comparePosition(A, B, isATest)
@@ -152,7 +152,7 @@ function position.comparePosition(A, B, isATest)
     return true
 end
 
-function position.goTo(x, y, z, Face)
+function position.goTo(x, y, z, face)
     assert(x, "x is nil, had to be a number or a table.")
     local goal
     if type(x) == "table" then
@@ -162,7 +162,7 @@ function position.goTo(x, y, z, Face)
             x = tonumber(x) or 0,
             y = tonumber(y) or 0,
             z = tonumber(z) or 0,
-            Face = Face or "north"
+            face = face or "north"
         }
     end
     if position.get() == goal then
@@ -222,7 +222,7 @@ function position.goTo(x, y, z, Face)
             end
             local success, err = turtle.dig()
             if not success then
-                print(Err)
+                print(err)
             end
         end
         local success, err = position.forward()
@@ -239,7 +239,7 @@ function position.goTo(x, y, z, Face)
         position.turnToFace("south")
         local hasBlock, datas = turtle.inspect()
         if hasBlock then
-            if find(turtleSettings.blackListedBlocks, data.name) then
+            if find(turtleSettings.blackListedBlocks, datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
             local success, err = turtle.dig()
