@@ -112,6 +112,19 @@ function position.turnToFace(Face)
     return true
 end
 
+function position.getDistanceBetween(pointA,pointB)
+    assert(pointA,"pointA is nil.")
+    assert(pointB,"pointB is nil.")
+    if type(pointA) ~= "table" then
+        error("pointA isn't a table")
+    end if type(pointB) ~= "table" then
+        error("pointB isn't a table")
+    end
+    pointA = { x = tonumber(pointA.x) or 0, y = pointA.y or 0, z = pointA.z or 0}
+    pointB = { x = pointB.x or 0, y = pointB.y or 0, z = pointB.z or 0}
+local AB = 
+end
+
 function position.comparePosition(A, B, isATest)
     if not isATest then error("This function is'nt usable.") end
     assert(A, "A is nil")
