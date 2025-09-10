@@ -14,11 +14,10 @@ _G.writeFile = function (FileName, Data)
     File.close()
     return true
 end
-_G.find = function(Table, Value)
-    if not Table then error("Table is nil or false") end
-    if not Value then error("Value is nil or false") end
-    for i, v in ipairs(Table) do
-        if v == Value then
+_G.find = function(table, value)
+    if not table or not value then return false end
+    for i, v in ipairs(table) do
+        if v == value then
             return i
         end
     end
@@ -28,5 +27,5 @@ end
 _G.turtleSettings = require("TurtleSettings")
 _G.position = require("PositionModule")
 local turtlePosition = readFile("Position")
-print("Position : "..turtlePosition.x..","..turtlePosition.y..", "..turtlePosition.z..", "..turtlePosition.Face)
+print("Position : "..turtlePosition.x..","..turtlePosition.y..", "..turtlePosition.z..", "..turtlePosition.face)
 print("Carburant : "..turtle.getFuelLevel().." ("..(turtle.getFuelLevel()/turtle.getFuelLimit())*100 .."%)")

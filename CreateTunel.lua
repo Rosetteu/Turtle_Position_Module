@@ -1,24 +1,39 @@
-local startLocation = position.Get()
+local startLocation = position.get()
 
 while true do
+    local hasBlock, datas = turtle.inspectDown()
+    if not hasBlock then
+        local slot = 1
+        local succes
+        while not hasBlock and slot < 16 do
+            turtle.select(slot)
+            succes = turtle.placeDown()
+            hasBlock, datas = turtle.inspectDown()
+            slot = slot + 1
+        end
+    end
     local hasBlock, datas = turtle.inspectUp()
     if hasBlock then
-        if not find(turtleSettings.BlacklistedBlocks, datas.name) then
+        if not find(turtleSettings.blacklistedBlocks, datas.name) then
             turtle.digUp()
         end
     end
-    hasBlock, datas = turtle.inspect()
+    local hasBlock, datas = turtle.inspect()
     if hasBlock then
-        if not find(turtleSettings.BlackListedBlocks, datas.name) then
+        if not find(turtleSettings.blacklistedBlocks, datas.name) then
             turtle.dig()
         end
     end
-    if turtle.getFuelLevel() > position.getDistanceBetween(position.get(),turtleSettings.Home)  then
-        local success, err = position.Forward()
+    if turtle.getFuelLevel() > position.getDistanceBetween(position.get(),turtleSettings.coordinates.home)  then
+        local success, err = position.forward()
         if not success then
-            writeFile("logs"..tostring(os.time()),"Error at "..textutils.serialise(position.get).." : "..err)
+            if err then
+                writeFile("[Error] - "..tostring(os.time())," = Error at "..textutils.serialise(position.get()).." : "..err)
+            else
+                print("[Error] - "..tostring(os.time())," = Error at "..textutils.serialise(position.get()).." :",err)
+            end
         end
     else
-        position.goTo(turtleSettings.Home)
+        position.goTo(turtleSettings.coordinates.home)
     end
 end

@@ -1,13 +1,14 @@
 local Locations = {
-    House = { Position = {1,-55,-1}, Names = { "House","Maison","Home"}}
+    House = { Position = {x=0,y=-55,z=0}, Names = {"house","maison","home"}},
+    Chest = { Position = {x=1,y=-55,z=-1}, Names = {"chest","coffre"}}
 }
 
 local Args = {...}
 if #Args == 1 then
-    local Str = Args[1]
-    if not type(Str) == "string" then return end
-    for _, Location in ipairs(Locations) do
-        if find(Location.Names,Str) then
+    local str = Args[1]
+    if type(str) ~= "string" then return end
+    for _, Location in pairs(Locations) do
+        if find(Location.Names,string.lower(str)) then
             position.goTo(Location.Position)
         end
     end
@@ -16,5 +17,5 @@ else
         print("3+ arguments needs, gave "..#Args)
         return
     end
-    position.goTo(Args[1], Args[2], Args[3], Args[4])
+    position.goTo(tonumber(Args[1]), tonumber(Args[2]), tonumber(Args[3]), Args[4])
 end
