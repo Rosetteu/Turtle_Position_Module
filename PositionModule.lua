@@ -122,7 +122,7 @@ function position.getDistanceBetween(pointA,pointB)
     end
     pointA = { x = tonumber(pointA.x) or 0, y = pointA.y or 0, z = pointA.z or 0}
     pointB = { x = pointB.x or 0, y = pointB.y or 0, z = pointB.z or 0}
-local AB = 
+return math.sqrt((pointB.x-pointA.x)^2+(poinatB.y-pointA.y)^2+(pointB.z-pointA.z)^2)
 end
 
 function position.comparePosition(A, B, isATest)
