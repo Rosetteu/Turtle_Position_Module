@@ -154,22 +154,22 @@ end
 
 function position.goTo(x, y, z, Face)
     assert(x, "x is nil, had to be a number or a table.")
-    local Goal
+    local goal
     if type(x) == "table" then
-        Goal = { x = tonumber(x.x) or 0, y = tonumber(x.y) or 0, z = tonumber(x.z) or 0, Face = x.Face or "north" }
+        goal = { x = tonumber(x.x) or 0, y = tonumber(x.y) or 0, z = tonumber(x.z) or 0, Face = x.Face or "north" }
     else
-        Goal = {
+        goal = {
             x = tonumber(x) or 0,
             y = tonumber(y) or 0,
             z = tonumber(z) or 0,
             Face = Face or "north"
         }
     end
-    if position.get() == Goal then
+    if position.get() == goal then
         return true
     end
     local TurtlePosition = position.get()
-    while position.get().x > Goal.x do
+    while position.get().x > goal.x do
         position.turnToFace("west")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
@@ -191,7 +191,7 @@ function position.goTo(x, y, z, Face)
             end
         end
     end
-    while position.get().x < Goal.x do
+    while position.get().x < goal.x do
         position.turnToFace("east")
         local HasBlock, Datas = turtle.inspect()
         if HasBlock then
@@ -203,62 +203,62 @@ function position.goTo(x, y, z, Face)
                 print(Err)
             end
         end
-        local Success, Err = position.forward()
-        if not Success then
-            if Err == "Block" then
-                local Success, Err = turtle.dig()
-                if not Success then
-                    print(Err)
+        local success, err = position.forward()
+        if not success then
+            if err == "block" then
+                local success, err = turtle.dig()
+                if not success then
+                    print(err)
                 end
             end
         end
     end
-    while position.get().z > Goal.z do
+    while position.get().z > goal.z do
         position.turnToFace("north")
-        local HasBlock, Datas = turtle.inspect()
-        if HasBlock then
-            if find(turtleSettings.BlackListedBlocks, Datas.name) then
+        local hasBlock, datas = turtle.inspect()
+        if hasBlock then
+            if find(turtleSettings.blackListedBlocks, datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
-            local Success, Err = turtle.dig()
-            if not Success then
+            local success, err = turtle.dig()
+            if not success then
                 print(Err)
             end
         end
-        local Success, Err = position.forward()
-        if not Success then
-            if Err == "Block" then
-                local Success, Err = turtle.dig()
-                if not Success then
-                    print(Err)
+        local success, err = position.forward()
+        if not success then
+            if err == "block" then
+                local success, err = turtle.dig()
+                if not success then
+                    print(err)
                 end
             end
         end
     end
-    while position.get().z < Goal.z do
+    while position.get().z < goal.z do
         position.turnToFace("south")
-        local HasBlock, Datas = turtle.inspect()
-        if HasBlock then
-            if find(turtleSettings.BlackListedBlocks, Datas.name) then
+        local hasBlock, datas = turtle.inspect()
+        if hasBlock then
+            if find(turtleSettings.blackListedBlocks, data.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
-            local Success, Err = turtle.dig()
-            if not Success then
-                print(Err)
+            local success, err = turtle.dig()
+            if not success then
+                print(err)
             end
         end
-        local Success, Err = position.forward()
-        if not Success then
-            if Err == "Block" then
-                local Success, Err = turtle.dig()
-                if not Success then
-                    print(Err)
+        local success, err = position.forward()
+        if not success then
+            if err == "block" then
+                local success, err = turtle.dig()
+                if not success then
+                    print(err)
                 end
             end
         end
     end
-    if Face then
-        position.turnToFace(Face)
+    if face then
+        position.turnToFace(face)
     end
 end
 
