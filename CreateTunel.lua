@@ -21,16 +21,24 @@ while true do
     local hasBlock, datas = turtle.inspect()
     if hasBlock then
         if not find(turtleSettings.blacklistedBlocks, datas.name) then
-            turtle.dig()
+            local success, err = turtle.dig()
+            if not success then
+                local success, err = turtle.forward()
+                if not success then
+                    log(error, "was block infront of "..datas.name)
+                end
+            end
         end
+    end
+    turtle.select(16)
+    if turtle.getItemDetails() then
+        position.goTo(turtleSettings.coordinates.chest)
     end
     if turtle.getFuelLevel() > position.getDistanceBetween(position.get(),turtleSettings.coordinates.home)  then
         local success, err = position.forward()
         if not success then
             if err then
                 writeFile("[Error] - "..tostring(os.time())," = Error at "..textutils.serialise(position.get()).." : "..err)
-            else
-                print("[Error] - "..tostring(os.time())," = Error at "..textutils.serialise(position.get()).." :",err)
             end
         end
     else
