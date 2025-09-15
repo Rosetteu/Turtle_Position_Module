@@ -14,12 +14,32 @@ while true do
     end
     local hasBlock, datas = turtle.inspectUp()
     if hasBlock then
+        if datas.name == "minecraft:water" then
+            local slot = 1
+            local succes
+            while not hasBlock and slot < 16 do
+                turtle.select(slot)
+                succes = turtle.placeUp()
+                hasBlock, datas = turtle.inspectUp()
+                slot = slot + 1
+            end
+        end
         if not find(turtleSettings.blacklistedBlocks, datas.name) then
             turtle.digUp()
         end
     end
     local hasBlock, datas = turtle.inspect()
     if hasBlock then
+        if datas.name == "minecraft:water" then
+            local slot = 1
+            local succes
+            while not hasBlock and slot < 16 do
+                turtle.select(slot)
+                succes = turtle.placeUp()
+                hasBlock, datas = turtle.inspectUp()
+                slot = slot + 1
+            end
+        end
         if not find(turtleSettings.blacklistedBlocks, datas.name) then
             local success, err = turtle.dig()
             if not success then
