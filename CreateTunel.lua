@@ -58,7 +58,7 @@ while true do
         local success, err = position.forward()
         if not success then
             if err then
-                writeFile("[Error] - "..tostring(os.time())," = Error at "..textutils.serialise(position.get()).." : "..err)
+                writeFile("[Error] - "..tostring(os.clock())," = Error at "..textutils.serialise(position.get()).." : "..err)
             end
         end
     else
