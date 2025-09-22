@@ -23,6 +23,15 @@ _G.find = function(table, value)
     end
     return nil
 end
+_G.log = function(logType, messages, fileName)
+    if not logType then logType = "unknown" end
+    if not message then message = "No message provided." end
+    if fileName and fileName ~= "" then 
+        writeFile(fileName.." - "..tostring(os.clock()),"[logType] | "..message)
+    else
+        writeFile(tostring(os.clock()),"[logType] | "..message)
+    end
+end
 
 _G.turtleSettings = require("TurtleSettings")
 _G.position = require("PositionModule")
