@@ -45,7 +45,7 @@ while true do
             if not success then
                 local success, err = turtle.forward()
                 if not success then
-                    log(error, "was block infront of "..datas.name)
+                    log("ERROR", "was block infront of "..datas.name)
                 end
             end
         end
@@ -58,7 +58,7 @@ while true do
         local success, err = position.forward()
         if not success then
             if err then
-                writeFile("[Error] - "..tostring(os.clock())," = Error at "..textutils.serialise(position.get()).." : "..err)
+                log("CRITICAL", "turtle was blocked in at "..textutils.serialise(position.get())..". Error type: "..err)
             end
         end
     else
