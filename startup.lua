@@ -33,18 +33,14 @@ _G.find = function(table, value)
     return nil
 end
 
-_G.Enum = {
+_G.enum = {
     LogType = {debug = "debug", warn = "warn", error = "error", critical = "critical", unknown = "unknown"}
 }
 
 _G.log = function(logType, messages, fileName)
-    if not logType then logType = unknown end
+    if not logType then logType = enum.logType.unknown end
     if not message then message = "No message provided." end
-    if fileName and fileName ~= "" then 
-        writeFile(fileName.." - "..tostring(os.clock()),"[logType] | "..message)
-    else
-        writeFile(tostring(os.clock()),"["..string.upper(logType).."] | "..message)
-    end
+    addLineToFile("log",os.clock().." : ["..logType.."] | "..message)
 end
 
 _G.turtleSettings = require("TurtleSettings")
