@@ -1,17 +1,26 @@
-_G.readFile = function (FileName)
-    if not FileName then error("FileName is nil") end
-    local File = fs.open(FileName,"r")
+_G.readFile = function (fileName)
+    if not fileName then error("fileName is nil") end
+    local file = fs.open(fileName,"r")
     local Data = textutils.unserialiseJSON(File.readAll())
-    File.close()
+    file.close()
     return Data
 end
-_G.writeFile = function (FileName, Data)
-    assert(FileName,"FileName is nil")
-    assert(Data,"Data is nil.")
+_G.writeFile = function (fileName, data)
+    assert(fileName,"fileName is nil")
+    assert(data,"data is nil.")
 
-    local File = fs.open(FileName,"w")
-    File.write(textutils.serialiseJSON(Data))
-    File.close()
+    local file = fs.open(fileName,"w")
+    file.write(textutils.serialiseJSON(Data))
+    file.close()
+    return true
+end
+_G.addLineToFile = function (fileName, data)
+    assert(fileName,"fileName is nil")
+    assert(data,"data is nil.")
+
+    local file = fs.open(fileName,"a")
+    if not file then return false,"file"
+    file.close()
     return true
 end
 _G.find = function(table, value)
@@ -23,13 +32,18 @@ _G.find = function(table, value)
     end
     return nil
 end
+
+_G.Enum = {
+    LogType = {debug = "debug", warn = "warn", error = "error", critical = "critical", unknown = "unknown"}
+}
+
 _G.log = function(logType, messages, fileName)
-    if not logType then logType = "unknown" end
+    if not logType then logType = unknown end
     if not message then message = "No message provided." end
     if fileName and fileName ~= "" then 
         writeFile(fileName.." - "..tostring(os.clock()),"[logType] | "..message)
     else
-        writeFile(tostring(os.clock()),"[logType] | "..message)
+        writeFile(tostring(os.clock()),"["..string.upper(logType).."] | "..message)
     end
 end
 
