@@ -37,7 +37,7 @@ _G.enum = {
     logType = {debug = "debug", warn = "warn", error = "error", critical = "critical", unknown = "unknown"}
 }
 
-_G.logType = 
+_G.logType = enum.logType
 
 _G.log = function(type, messages, fileName)
     if not type then type = logType.unknown end
