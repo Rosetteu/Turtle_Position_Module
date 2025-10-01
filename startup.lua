@@ -34,13 +34,15 @@ _G.find = function(table, value)
 end
 
 _G.enum = {
-    LogType = {debug = "debug", warn = "warn", error = "error", critical = "critical", unknown = "unknown"}
+    logType = {debug = "debug", warn = "warn", error = "error", critical = "critical", unknown = "unknown"}
 }
 
-_G.log = function(logType, messages, fileName)
-    if not logType then logType = enum.logType.unknown end
+_G.logType = 
+
+_G.log = function(type, messages, fileName)
+    if not type then type = logType.unknown end
     if not message then message = "No message provided." end
-    addLineToFile("log",os.clock().." : ["..logType.."] | "..message)
+    addLineToFile("log",os.clock().." : ["..Type.."] | "..message)
 end
 
 _G.turtleSettings = require("TurtleSettings")
