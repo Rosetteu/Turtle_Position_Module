@@ -49,7 +49,7 @@ _G.log = function(lType, messages, fileName, immediatelyCut?)
     if immediatelyCut == nil then immediatelyCut = true end
     if immediatelyCut and lType.level > 1 then
         addLineToFile("log",tostring(os.clock()).." : [SYSTEM] | Turtle shutdown.")
-        turtle.shutdown()
+        os.shutdown()
     end
 end
 
