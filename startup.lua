@@ -5,6 +5,7 @@ _G.readFile = function (fileName)
     file.close()
     return Data
 end
+
 _G.writeFile = function (fileName, data)
     assert(fileName,"fileName is nil")
     assert(data,"data is nil.")
@@ -14,6 +15,7 @@ _G.writeFile = function (fileName, data)
     file.close()
     return true
 end
+
 _G.addLineToFile = function (fileName, data)
     assert(fileName,"fileName is nil")
     assert(data,"data is nil.")
@@ -23,6 +25,7 @@ _G.addLineToFile = function (fileName, data)
     file.close()
     return true
 end
+
 _G.find = function(table, value)
     if not table or not value then return false end
     for i, v in ipairs(table) do
@@ -34,15 +37,20 @@ _G.find = function(table, value)
 end
 
 _G.enum = {
-    logType = {debug = "debug", warn = "warn", error = "error", critical = "critical", unknown = "unknown"}
+    logType = {debug = {name="debug",level=0}, warn = {name="warn",level=1}, error = {name="error",level=2}, critical = {name="critical",level=3}, unknown = {name="debug",level=4}}
 }
 
 _G.logType = enum.logType
 
-_G.log = function(type, messages, fileName)
+_G.log = function(type, messages, fileName,immediatelyCut?)
     if not type then type = logType.unknown end
     if not message then message = "No message provided." end
-    addLineToFile("log",os.clock().." : ["..Type.."] | "..message)
+    addLineToFile("log", tostring(os.clock()).." - "..fileName.." : ["..string.upper(type.name).."] | "..tostring(message))
+    if immediatelyCut == nil then immediatelyCut = true end
+    if immediatelyCut and type.level > 1 then
+        addLineToFile("log",tostring(os.clock()).." : [SYSTEM] | Turtle shutdown.")
+        turtle.shutdown()
+    end
 end
 
 _G.turtleSettings = require("TurtleSettings")
