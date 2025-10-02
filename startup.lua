@@ -42,12 +42,12 @@ _G.enum = {
 
 _G.logType = enum.logType
 
-_G.log = function(type, messages, fileName,immediatelyCut?)
+_G.log = function(lType, messages, fileName,immediatelyCut?)
     if not type then type = logType.unknown end
     if not message then message = "No message provided." end
-    addLineToFile("log", tostring(os.clock()).." - "..fileName.." : ["..string.upper(type.name).."] | "..tostring(message))
+    addLineToFile("log", tostring(os.clock()).." - "..fileName.." : ["..string.upper(lType.name).."] | "..tostring(message))
     if immediatelyCut == nil then immediatelyCut = true end
-    if immediatelyCut and type.level > 1 then
+    if immediatelyCut and lType.level > 1 then
         addLineToFile("log",tostring(os.clock()).." : [SYSTEM] | Turtle shutdown.")
         turtle.shutdown()
     end
