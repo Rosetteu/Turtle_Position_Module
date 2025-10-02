@@ -42,8 +42,8 @@ _G.enum = {
 
 _G.logType = enum.logType
 
-_G.log = function(lType, messages, fileName,immediatelyCut?)
-    if not type then type = logType.unknown end
+_G.log = function(lType, messages, fileName, immediatelyCut?)
+    if not lType then lType = logType.unknown end
     if not message then message = "No message provided." end
     addLineToFile("log", tostring(os.clock()).." - "..fileName.." : ["..string.upper(lType.name).."] | "..tostring(message))
     if immediatelyCut == nil then immediatelyCut = true end
