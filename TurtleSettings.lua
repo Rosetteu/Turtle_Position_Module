@@ -1,9 +1,12 @@
 local TurtleSettings = {
+    debugMode = false,
+
     blacklistedBlocks = {
         "minecraft:bedrock"
     },
     whitelistedBlocks = {
-        "minecraft:deepslate_diamond_ore"
+        "minecraft:deepslate_diamond_ore",
+        "minecraft:diamond_ore"
     },
     autoEjectItems = {
         "minecraft:cobbeled_deepslate",
