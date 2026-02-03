@@ -37,7 +37,7 @@ _G.find = function(table, value)
 end
 
 _G.enum = {
-    logType = {debug = {name="debug",level=0}, warn = {name="warn",level=1}, error = {name="error",level=2}, critical = {name="critical",level=3}, unknown = {name="debug",level=4}}
+    logType = {debug = {name="debug",level=0}, warn = {name="warn",level=1}, error = {name="error",level=2}, critical = {name="critical",level=3}, unknown = {name="debug?",level=4}}
 }
 
 _G.logType = enum.logType
