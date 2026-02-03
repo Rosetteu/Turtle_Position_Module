@@ -37,9 +37,11 @@ _G.find = function(table, value)
 end
 
 
-_G.turtleSettings = require("TurtleSettings")
-_G.position = require("PositionModule")
-local turtlePosition = readFile("Position")
+_G.turtleSettings = require("turtleSettings")
+_G.position = require("positionModule")
+_G.log = require("logModule")
+
+local turtlePosition = readFile("position.json")
 if not turtlePosition then
     print("Undefined position, use setPosition to set turtle's position")
 else

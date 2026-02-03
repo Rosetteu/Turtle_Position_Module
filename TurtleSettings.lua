@@ -1,5 +1,5 @@
 local TurtleSettings = {
-    debugMode = false,
+    wirelessDebug = true,
 
     blacklistedBlocks = {
         "minecraft:bedrock"

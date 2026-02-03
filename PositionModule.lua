@@ -1,5 +1,5 @@
 local position = {}
-local positionFile = "position"
+local positionFile = "position.json"
 
 assert(writeFile, "writeFile() is nil.")
 assert(readFile, "readFile() is nil.")
@@ -7,6 +7,7 @@ assert(readFile, "readFile() is nil.")
 
 function position.set(x, y, z, face)
     local currentPosition = readFile(positionFile)
+    local turtlePosition
     if type(x) == "table" then
         turtlePosition = {
             x = x.x or 0,
