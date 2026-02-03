@@ -6,54 +6,54 @@ assert(readFile, "readFile() is nil.")
 
 
 function position.set(x, y, z, face)
-    local CurrentPosition = readFile(positionFile)
+    local currentPosition = readFile(positionFile)
     if type(x) == "table" then
-        TurtlePosition = {
+        turtlePosition = {
             x = x.x or 0,
             y = x.y or 0,
             z = x.z or 0,
             face = x.face or "north"
         }
     else
-        TurtlePosition = {
-            x = x or CurrentPosition.x or 0,
-            y = y or CurrentPosition.y or 0,
-            z = z or CurrentPosition.z or 0,
-            face = face or CurrentPosition.face or "north"
+        turtlePosition = {
+            x = x or currentPosition.x or 0,
+            y = y or currentPosition.y or 0,
+            z = z or currentPosition.z or 0,
+            face = face or currentPosition.face or "north"
         }
     end
-    writeFile(positionFile, TurtlePosition)
+    writeFile(positionFile, turtlePosition)
 end
 
 function position.get()
-    local TurtlePosition = readFile(positionFile)
-    if not TurtlePosition then error("position.get à été utilisé alors que la position n'a pas été définie.") end
-    return TurtlePosition
+    local turtlePosition = readFile(positionFile)
+    if not turtlePosition then error("position.get à été utilisé alors que la position n'a pas été définie.") end
+    return turtlePosition
 end
 
 function position.forward()
-    local TurtlePosition = position.get()
-    if not TurtlePosition then error("TurtlePosition is nil.") end
-    local HasBlock, datas = turtle.inspect()
-    if HasBlock then
-        return false, "Block", datas
+    local turtlePosition = position.get()
+    if not turtlePosition then error("TurtlePosition is nil.") end
+    local hasBlock, datas = turtle.inspect()
+    if hasBlock then
+        return false, "block", datas
     else
         if turtle.getFuelLevel() > 0 then
             local success = turtle.forward()
             if success then
-                if TurtlePosition.face == "north" then
-                    TurtlePosition.z = TurtlePosition.z - 1
-                elseif TurtlePosition.face == "south" then
-                    TurtlePosition.z = TurtlePosition.z + 1
-                elseif TurtlePosition.face == "east" then
-                    TurtlePosition.x = TurtlePosition.x + 1
-                elseif TurtlePosition.face == "west" then
-                    TurtlePosition.x = TurtlePosition.x - 1
+                if hurtlePosition.face == "north" then
+                    TurtlePosition.z = turtlePosition.z - 1
+                elseif turtlePosition.face == "south" then
+                    TurtlePosition.z = turtlePosition.z + 1
+                elseif turtlePosition.face == "east" then
+                    turtlePosition.x = turtlePosition.x + 1
+                elseif turtlePosition.face == "west" then
+                    turtlePosition.x = turtlePosition.x - 1
                 end
-                position.set(TurtlePosition)
+                position.set(turtlePosition)
                 return true
             else
-                return false, "Unknown"
+                return false, "unknown"
             end
         else
             return false, "No fuel"
@@ -62,20 +62,20 @@ function position.forward()
 end
 
 function position.turnRight()
-    local TurtlePosition = position.get()
-    if not TurtlePosition then error("TurtlePosition is nil.") end
+    local turtlePosition = position.get()
+    if not turtlePosition then error("turtlePosition is nil.") end
     local success = turtle.turnRight()
     if success then
-        if TurtlePosition.face == "north" then
+        if turtlePosition.face == "north" then
             TurtlePosition.face = "east"
-        elseif TurtlePosition.face == "east" then
-            TurtlePosition.face = "south"
-        elseif TurtlePosition.face == "south" then
-            TurtlePosition.face = "west"
-        elseif TurtlePosition.face == "west" then
-            TurtlePosition.face = "north"
+        elseif turtlePosition.face == "east" then
+            turtlePosition.face = "south"
+        elseif turtlePosition.face == "south" then
+            turtlePosition.face = "west"
+        elseif turtlePosition.face == "west" then
+            turtlePosition.face = "north"
         end
-        position.set(TurtlePosition)
+        position.set(turtlePosition)
         return true
     else
         return false
@@ -83,20 +83,20 @@ function position.turnRight()
 end
 
 function position.turnLeft()
-    local TurtlePosition = position.get()
-    if not TurtlePosition then error("TurtlePosition is nil.") end
+    local turtlePosition = position.get()
+    if not turtlePosition then error("turtlePosition is nil.") end
     local success = turtle.turnLeft()
     if success then
-        if TurtlePosition.face == "north" then
-            TurtlePosition.face = "west"
-        elseif TurtlePosition.face == "west" then
-            TurtlePosition.face = "south"
-        elseif TurtlePosition.face == "south" then
-            TurtlePosition.face = "east"
-        elseif TurtlePosition.face == "east" then
-            TurtlePosition.face = "north"
+        if turtlePosition.face == "north" then
+            turtlePosition.face = "west"
+        elseif turtlePosition.face == "west" then
+            turtlePosition.face = "south"
+        elseif turtlePosition.face == "south" then
+            turtlePosition.face = "east"
+        elseif turtlePosition.face == "east" then
+            turtlePosition.face = "north"
         end
-        position.set(TurtlePosition)
+        position.set(turtlePosition)
         return true
     else
         return false
@@ -126,7 +126,7 @@ return math.sqrt((pointB.x-pointA.x)^2+(pointB.y-pointA.y)^2+(pointB.z-pointA.z)
 end
 
 function position.comparePosition(A, B, isATest)
-    if not isATest then error("This function is'nt usable.") end
+    if not isATest then error("this function is'nt usable.") end
     assert(A, "A is nil")
     assert(B, "B is nil")
     if type(A) ~= "table" then
@@ -170,39 +170,39 @@ function position.goTo(x, y, z, face)
     if position.get() == goal then
         return true
     end
-    local TurtlePosition = position.get()
+    local turtlePosition = position.get()
     while position.get().x > goal.x do
         position.turnToFace("west")
-        local HasBlock, datas = turtle.inspect()
-        if HasBlock then
+        local hasBlock, datas = turtle.inspect()
+        if hasBlock then
             if find(turtleSettings.blackListedBlocks, datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
-            local success, Err = turtle.dig()
+            local success, err = turtle.dig()
             if not success then
-                print(Err)
+                print(err)
             end
         end
-        local success, Err = position.forward()
+        local success, err = position.forward()
         if not success then
-            if Err == "Block" then
+            if err == "block" then
                 local success, Err = turtle.dig()
                 if not success then
-                    print(Err)
+                    print(err)
                 end
             end
         end
     end
     while position.get().x < goal.x do
         position.turnToFace("east")
-        local HasBlock, datas = turtle.inspect()
-        if HasBlock then
+        local hasBlock, datas = turtle.inspect()
+        if hasBlock then
             if find(turtleSettings.blackListedBlocks, datas.name) then
                 error("Blacklisted block in fornt of the turtle.")
             end
-            local success, Err = turtle.dig()
+            local success, err = turtle.dig()
             if not success then
-                print(Err)
+                print(err)
             end
         end
         local success, err = position.forward()

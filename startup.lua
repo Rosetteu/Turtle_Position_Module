@@ -37,7 +37,6 @@ _G.find = function(table, value)
 end
 
 
-
 _G.turtleSettings = require("TurtleSettings")
 _G.position = require("PositionModule")
 local turtlePosition = readFile("Position")
