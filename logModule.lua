@@ -1,12 +1,11 @@
 local log = {}
 
 local modem = peripheral.find("modem")
-print("logModule | modem = " .. tostring(modem))
 local debugChannel = turtleSettings.wirelessDebugChannel
 if debugChannel == 0 or not modem then
     debugChannel = false
 else
-   modem.open(debugChanel)
+    modem.open(debugChannel)
 end
 
 if not enum then _G.enum = {} end
@@ -14,31 +13,44 @@ if not enum.logType then _G.enum.logType = { debug = { name = "debug", level = 0
 
 local timestamp = tostring(os.epoch("utc"))
 fs.makeDir("./logs")
-fs.open("./logs/" .. timestamp .. ".log", "w").close()
+local logPath = "./logs/" .. timestamp .. ".log"
 
 log.add = function(lType, message, fileName, forceShutdown)
     lType = lType or enum.logType.unknown
     message = message or "No message provided."
-    fileName = fileName or "N/A"
     if forceShutdown == nil then forceShutdown = true end
+
+    local info = debug.getinfo(2, "S")
+    local caller = info and info.short_src or "unknown"
+    fileName = fileName or caller
 
     local timeStr = string.format("%.2f", os.clock())
     local line = timeStr .. " - " .. fileName .. " : [" .. string.upper(lType.name) .. "] | " .. tostring(message)
 
-    if debugChanel and modem then 
-        modem.transmit(debugChanel, 0, line) 
+    if debugChannel and modem then
+        modem.transmit(debugChannel, 0, line)
     end
 
     addLineToFile(logPath, line)
 
     if forceShutdown and lType.level > 1 then
-        local shutdownMsg = timeStr .. " : [SYSTEM] | Turtle shutdown due to critical error."
+        local shutdownMsg = timeStr .. " - SYSTEM : [" .. string.upper(lType.name) .. "] | Turtle shutdown."
         addLineToFile(logPath, shutdownMsg)
-        if debugChanel and modem then modem.transmit(debugChanel, 0, shutdownMsg) end
-        
+        if debugChannel and modem then modem.transmit(debugChannel, 0, shutdownMsg) end
+
         sleep(0.5)
         os.shutdown()
     end
 end
+
+log.clearAll = function()
+    local files = fs.list("/logs/")
+    for i = 1, #files do
+        fs.delete("/logs/"..files[i])
+        return true
+    end
+end
+
+log.add(enum.logType.debug, "Logs enabled")
 
 return log

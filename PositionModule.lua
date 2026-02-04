@@ -1,9 +1,9 @@
 local position = {}
 local positionFile = "position.json"
 
-assert(writeFile, "writeFile() is nil.")
-assert(readFile, "readFile() is nil.")
-
+assert(writeFile, "Function 'writeFile' is nil.")
+assert(readFile, "Function 'readFile' is nil.")
+assert(log,"positionModule require logModule.")
 
 function position.set(x, y, z, face)
     local currentPosition = readFile(positionFile)
@@ -24,17 +24,18 @@ function position.set(x, y, z, face)
         }
     end
     writeFile(positionFile, turtlePosition)
+    log.add(enum.logType.debug,"New positionn set : "..textutils.serialise(turtlePosition))
 end
 
 function position.get()
     local turtlePosition = readFile(positionFile)
-    if not turtlePosition then error("position.get à été utilisé alors que la position n'a pas été définie.") end
+    if not turtlePosition then log.add(enum.logType.error,"position.get à été utilisé alors que la position n'a pas été définie.") end
     return turtlePosition
 end
 
 function position.forward()
     local turtlePosition = position.get()
-    if not turtlePosition then error("TurtlePosition is nil.") end
+    if not turtlePosition then error("turtlePosition is nil.") end
     local hasBlock, datas = turtle.inspect()
     if hasBlock then
         return false, "block", datas
@@ -42,10 +43,10 @@ function position.forward()
         if turtle.getFuelLevel() > 0 then
             local success = turtle.forward()
             if success then
-                if hurtlePosition.face == "north" then
-                    TurtlePosition.z = turtlePosition.z - 1
+                if turtlePosition.face == "north" then
+                    turtlePosition.z = turtlePosition.z - 1
                 elseif turtlePosition.face == "south" then
-                    TurtlePosition.z = turtlePosition.z + 1
+                    turtlePosition.z = turtlePosition.z + 1
                 elseif turtlePosition.face == "east" then
                     turtlePosition.x = turtlePosition.x + 1
                 elseif turtlePosition.face == "west" then
@@ -68,7 +69,7 @@ function position.turnRight()
     local success = turtle.turnRight()
     if success then
         if turtlePosition.face == "north" then
-            TurtlePosition.face = "east"
+            turtlePosition.face = "east"
         elseif turtlePosition.face == "east" then
             turtlePosition.face = "south"
         elseif turtlePosition.face == "south" then
@@ -243,7 +244,7 @@ function position.goTo(x, y, z, face)
         local hasBlock, datas = turtle.inspect()
         if hasBlock then
             if find(turtleSettings.blackListedBlocks, datas.name) then
-                error("Blacklisted block in fornt of the turtle.")
+                log(enum.logType.error,"Blacklisted block in fornt of the turtle.")
             end
             local success, err = turtle.dig()
             if not success then

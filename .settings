@@ -1,0 +1,4 @@
+{
+  [ "craftos.show_tips" ] = false,
+  [ "craftOS.show_tips" ] = false,
+}

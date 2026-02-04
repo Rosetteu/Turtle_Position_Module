@@ -1,5 +1,5 @@
-local TurtleSettings = {
-    wirelessDebugChanel = 69,
+local turtleSettings = {
+    wirelessDebugChannel = 69,
 
     blacklistedBlocks = {
         "minecraft:bedrock"
@@ -25,4 +25,4 @@ local TurtleSettings = {
         }
     }
 }
-return TurtleSettings
+return turtleSettings

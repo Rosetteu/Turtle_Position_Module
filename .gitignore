@@ -6,3 +6,5 @@ setPosition.lua
 test.lua
 position.json
 /logs
+shutdown.lua
+clearLogs.lua
