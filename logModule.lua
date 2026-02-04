@@ -10,12 +10,12 @@ log.add = function(logType, message, fileName, shutdown)
     if not logType then logType = logType.unknown end
     if not message then message = "No message provided." end
 
-    addLineToFile(time", tostring(os.clock()) .. " - " .. fileName .. " : [" .. string.upper(logType.name) .. "] | " .. tostring(message))
+    addLineToFile("./logs/"..timestamp..".log", tostring(os.clock()) .. " - " .. fileName .. " : [" .. string.upper(logType.name) .. "] | " .. tostring(message))
 
     if shutdown == nil then shutdown = true end
 
     if shutdown and logType.level > 1 then
-        addLineToFile("logs/lastest.log", tostring(os.clock()) .. " : [SYSTEM] | Turtle shutdown.")
+        addLineToFile("./logs/"..timestamp..".log", tostring(os.clock()) .. " : [SYSTEM] | Turtle shutdown.")
         os.shutdown()
     end
 end
