@@ -1,8 +1,10 @@
-DefaultDatas.json
-Refuel.lua
-Reset.lua
-SetPosition.lua
+/.vscode
+defaultDatas.json
+refuel.lua
+reset.lua
+setPosition.lua
 test.lua
-Position
+position.json
 /logs
-Position
+shutdown.lua
+clearLogs.lua

@@ -1,20 +1,56 @@
+local log = {}
+
+local modem = peripheral.find("modem")
+local debugChannel = turtleSettings.wirelessDebugChannel
+if debugChannel == 0 or not modem then
+    debugChannel = false
+else
+    modem.open(debugChannel)
+end
+
 if not enum then _G.enum = {} end
 if not enum.logType then _G.enum.logType = { debug = { name = "debug", level = 0 }, warn = { name = "warn", level = 1 }, error = { name = "error", level = 2 }, critical = { name = "critical", level = 3 }, unknown = { name = "debug", level = 4 } } end
 
-local monotonic = tostring(os.epoch("utc"))
-local file = fs.open("./logs/"..monotonic,"w")
-file.close()
+local timestamp = tostring(os.epoch("utc"))
+fs.makeDir("./logs")
+local logPath = "./logs/" .. timestamp .. ".log"
 
-_G.log = function(logType, message, fileName, shutdown)
-    if not logType then logType = logType.unknown end
-    if not message then message = "No message provided." end
+log.add = function(lType, message, fileName, forceShutdown)
+    lType = lType or enum.logType.unknown
+    message = message or "No message provided."
+    if forceShutdown == nil then forceShutdown = true end
 
-    addLineToFile("log", tostring(os.clock()) .. " - " .. fileName .. " : [" .. string.upper(logType.name) .. "] | " .. tostring(message))
+    local info = debug.getinfo(2, "S")
+    local caller = info and info.short_src or "unknown"
+    fileName = fileName or caller
 
-    if shutdown == nil then shutdown = true end
+    local timeStr = string.format("%.2f", os.clock())
+    local line = timeStr .. " - " .. fileName .. " : [" .. string.upper(lType.name) .. "] | " .. tostring(message)
 
-    if shutdown and logType.level > 1 then
-        addLineToFile("logs/lastest.log", tostring(os.clock()) .. " : [SYSTEM] | Turtle shutdown.")
+    if debugChannel and modem then
+        modem.transmit(debugChannel, 0, line)
+    end
+
+    addLineToFile(logPath, line)
+
+    if forceShutdown and lType.level > 1 then
+        local shutdownMsg = timeStr .. " - SYSTEM : [" .. string.upper(lType.name) .. "] | Turtle shutdown."
+        addLineToFile(logPath, shutdownMsg)
+        if debugChannel and modem then modem.transmit(debugChannel, 0, shutdownMsg) end
+
+        sleep(0.5)
         os.shutdown()
     end
 end
+
+log.clearAll = function()
+    local files = fs.list("/logs/")
+    for i = 1, #files do
+        fs.delete("/logs/"..files[i])
+        return true
+    end
+end
+
+log.add(enum.logType.debug, "Logs enabled")
+
+return log
